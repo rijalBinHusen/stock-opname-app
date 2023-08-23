@@ -3,7 +3,7 @@ import { Route, Routes, Router } from '@solidjs/router';
 
 import "./style.css"
 const Home = lazy(() => import ("./pages/home"));
-const ItemLists = lazy(() => import("./pages/item-lists"));
+const ItemLists = lazy(() => import("./pages/item-lists/item-lists"));
 
 const App: Component = () => {
 
