@@ -1,17 +1,22 @@
-import { createSignal, type Component } from 'solid-js';
+import {type Component } from 'solid-js';
+import { Route, Routes, Router } from '@solidjs/router';
 
 import "./style.css"
 import Home from "./pages/home";
+import ItemLists from './pages/item-lists';
 
 const App: Component = () => {
-
-  const [name, setName] = createSignal();
 
   return (
 
     <div class="container">
+      <Router>
 
-      <Home />
+        <Routes>
+          <Route path="/items" component={ItemLists} />
+          <Home />
+        </Routes>
+      </Router>
       
     </div>
   );
