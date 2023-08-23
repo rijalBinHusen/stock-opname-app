@@ -16,7 +16,7 @@ export async function addItem(itemName: string): Promise<void> {
     
     if(items.length === 0) { await getItems(); };
     
-    setItem((items) => [...items, { itemId, itemName }]);
+    setItem((items) => [{ itemId, itemName }, ...items]);
 
     saveToLocalStorage();
 }
