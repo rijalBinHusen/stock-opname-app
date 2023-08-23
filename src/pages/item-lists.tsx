@@ -1,4 +1,5 @@
 import type { Component } from 'solid-js';
+import Navigation from '../components/Navigation';
 
 const ItemLists: Component = () => {
   return (
@@ -43,6 +44,7 @@ const ItemLists: Component = () => {
             <button class="button secondary-color">Edit</button>
             </div>        
         </div>
+        <Navigation />
     </>
   );
 };
