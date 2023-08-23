@@ -26,7 +26,7 @@ const ItemLists: Component = () => {
 
         <div class="lists-item">
           
-          <For each={initialItems}>
+          <For each={items()}>
             {(item: Item) => {
 
               return (<ItemCard itemId={item.itemId} itemName={item.itemName} />)
