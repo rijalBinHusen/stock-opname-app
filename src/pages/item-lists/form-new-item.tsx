@@ -12,6 +12,8 @@ function FormNewItem (props: AddItemProps) {
   const [newItem, setNewItem] = createSignal(emptyItem);
 
   const addItem: JSX.EventHandler<HTMLButtonElement, MouseEvent> = (event) => {
+
+    if(newItem().itemName === "") return;
     
     event.preventDefault();
     props.addItem(newItem().itemName);
@@ -21,10 +23,17 @@ function FormNewItem (props: AddItemProps) {
   return (
     
     <div class="form-input">
-        <input type="text" class="item-name" name="item-name" id="item-name" placeholder="Nama item baru" value={newItem().itemName} onInput={(e) => {
-          setNewItem({ ...newItem(), itemName: e.currentTarget.value})
-        }}/>
-        <button onClick={addItem} class="button">Tambah</button>
+
+      <input 
+          type="text" 
+          class="item-name" 
+          name="item-name" 
+          id="item-name" 
+          placeholder="Nama item baru" 
+          value={newItem().itemName} 
+          onInput={(e) => {setNewItem({ ...newItem(), itemName: e.currentTarget.value})}}
+        />
+      <button onClick={addItem} class="button">Tambah</button>
     </div>
   );
 };

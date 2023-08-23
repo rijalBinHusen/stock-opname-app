@@ -22,6 +22,8 @@ export async function addItem(itemName: string): Promise<void> {
 }
 
 export async function getItems(): Promise<void> {
+    
+    if(items.length > 0) return;
 
     const getItems = localStorage.getItem(localStorageName);
 
