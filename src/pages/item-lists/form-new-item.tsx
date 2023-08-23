@@ -1,8 +1,8 @@
 import { createSignal, type Component, type Setter, JSX } from 'solid-js';
-import { type Item } from "./item-lists"
+import { type Item } from "./function"
 
 export interface AddItemProps {
-  setItem: Setter<Item[]>;
+  addItem: Function;
 }
 
 const emptyItem: Item = { itemId: "", itemName: "" };
@@ -12,8 +12,9 @@ function FormNewItem (props: AddItemProps) {
   const [newItem, setNewItem] = createSignal(emptyItem);
 
   const addItem: JSX.EventHandler<HTMLButtonElement, MouseEvent> = (event) => {
+    
     event.preventDefault();
-    props.setItem((items) => [...items, newItem()]);
+    props.addItem(newItem().itemName);
     setNewItem(emptyItem);
   }
 
