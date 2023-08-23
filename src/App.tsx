@@ -14,7 +14,7 @@ const App: Component = () => {
 
         <Routes>
           <Route path="/items" component={ItemLists} />
-          <Home />
+          <Route path="/" component={Home} />
         </Routes>
       </Router>
       

@@ -1,10 +1,11 @@
 import type { Component } from 'solid-js';
+import { A } from "@solidjs/router"
 
 const Navigation: Component = () => {
   return (
     <div class="navigation">
-        <button> Home </button>
-        <button>Stock</button>
+        <A href="/"><button> Home </button></A>
+        <A href="stocks"><button>Stock</button></A>
       </div>
   );
 };
