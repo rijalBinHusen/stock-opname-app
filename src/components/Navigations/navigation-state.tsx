@@ -2,6 +2,6 @@ import { createSignal } from "solid-js";
 
 type page = "home"|"item"|"stock";
   
-const currentPage:page = "home";
+let currentPage:page;
 
-export const [page, setPage] = createSignal(currentPage);
+export const [page, setPage] = createSignal(currentPage = "home");
