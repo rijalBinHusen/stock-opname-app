@@ -1,23 +1,17 @@
-import { createSignal,  JSX } from 'solid-js';
+import { Accessor,  JSX, Setter } from 'solid-js';
 
 export interface AddItemProps {
   addItem: Function;
-  itemName: string
+  itemName: Accessor<string>
+  setItem: Setter<string>
 }
 
-const itemNameEmpty = "";
-
 function FormNewItem (props: AddItemProps) {
-  
-  const [newItem, setNewItem] = createSignal(itemNameEmpty);
 
   const addItem: JSX.EventHandler<HTMLButtonElement, MouseEvent> = (event) => {
     
     event.preventDefault();
-    if(newItem() === "") return;
-    
-    props.addItem(newItem());
-    setNewItem("");
+    props.addItem();
   }
 
   return (
@@ -30,8 +24,8 @@ function FormNewItem (props: AddItemProps) {
           name="item-name" 
           id="item-name" 
           placeholder="Nama item baru" 
-          value={props.itemName} 
-          onInput={(e) => {setNewItem(e.currentTarget.value)}}
+          value={props.itemName()} 
+          onInput={(e) => props.setItem(e.currentTarget.value)}
         />
       <button onClick={addItem} class="button">Tambah</button>
     </div>

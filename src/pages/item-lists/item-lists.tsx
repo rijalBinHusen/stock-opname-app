@@ -18,11 +18,23 @@ const ItemLists: Component = () => {
     }
   }
 
+  function createNewItem () {
+
+    if(itemToEdit() == "") return;
+
+    addItem(itemToEdit());
+    setItemToEdit("");
+  }
+
   return (
     <>
         <h1>Daftar item</h1>
 
-        <FormNewItem addItem={addItem} itemName={itemToEdit()} />
+        <FormNewItem 
+          addItem={createNewItem} 
+          itemName={itemToEdit} 
+          setItem={setItemToEdit}
+        />
 
         <div class="lists-item">
           
