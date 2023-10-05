@@ -6,24 +6,33 @@ import { type Item, items, addItem, getItems } from "./function";
 
 const ItemLists: Component = () => {
 
-  const [itemToEdit, setItemToEdit] = createSignal("");
+  const [itemName, setItemName] = createSignal("");
+  const [isEditMode, setEditMode] = createSignal(false);
+  
 
   getItems();
+
+  function resetForm () {
+
+    setItemName("");
+    setEditMode(false);
+  }
 
   const editItemById: JSX.EventHandler<HTMLButtonElement, MouseEvent> = (event) => {
 
     if(typeof event === "string" && event !== "") {
 
-      setItemToEdit(event);
+      setItemName(event);
+      setEditMode(true);
     }
   }
 
   function createNewItem () {
 
-    if(itemToEdit() == "") return;
+    if(itemName() == "") return;
 
-    addItem(itemToEdit());
-    setItemToEdit("");
+    addItem(itemName());
+    resetForm();
   }
 
   return (
@@ -32,8 +41,10 @@ const ItemLists: Component = () => {
 
         <FormNewItem 
           addItem={createNewItem} 
-          itemName={itemToEdit} 
-          setItem={setItemToEdit}
+          itemName={itemName} 
+          setItem={setItemName}
+          isEditMode={isEditMode}
+          cancel={resetForm}
         />
 
         <div class="lists-item">

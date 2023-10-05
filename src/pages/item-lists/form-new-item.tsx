@@ -1,9 +1,11 @@
-import { Accessor,  JSX, Setter } from 'solid-js';
+import { Accessor,  JSX, Setter, Show } from 'solid-js';
 
 export interface AddItemProps {
-  addItem: Function;
+  addItem: Function
   itemName: Accessor<string>
   setItem: Setter<string>
+  isEditMode: Accessor<boolean>
+  cancel: Function
 }
 
 function FormNewItem (props: AddItemProps) {
@@ -27,7 +29,11 @@ function FormNewItem (props: AddItemProps) {
           value={props.itemName()} 
           onInput={(e) => props.setItem(e.currentTarget.value)}
         />
-      <button onClick={addItem} class="button">Tambah</button>
+      <button onClick={addItem} class="button">{props.isEditMode() ? 'Update' : 'Tambah'}</button>
+      <Show when={props.isEditMode()}>
+
+        <button onClick={ () =>props.cancel()} class="button">Cancel</button>
+      </Show>
     </div>
   );
 };
