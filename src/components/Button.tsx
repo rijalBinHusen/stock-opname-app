@@ -1,6 +1,7 @@
 interface Button {
     color: string
     text: string
+    onClick?: Function
 }
 
 export default function Button(props: Button) {
@@ -10,5 +11,5 @@ export default function Button(props: Button) {
 
         className.push("secondary-color")
     }
-    return (<button class={className.join(" ")}>{props.text}</button>)
+    return (<button onClick={ () => props.onClick && props.onClick() } class={className.join(" ")}>{props.text}</button>)
   }
