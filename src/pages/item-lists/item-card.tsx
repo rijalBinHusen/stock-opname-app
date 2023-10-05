@@ -1,4 +1,5 @@
-import type { Component } from 'solid-js';
+
+import Button from "../../components/Button"
 
 interface Item {
     itemName: string
@@ -9,7 +10,7 @@ export default function ItemCard (props: Item) {
   return (
     <div class="item-card">
         <span>{props.itemName}</span>
-        <button class="button secondary-color">Edit</button>
+        <Button color="secondary" text="Edit" />
     </div>
   );
 };

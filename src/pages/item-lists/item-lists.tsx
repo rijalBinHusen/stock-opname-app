@@ -1,4 +1,4 @@
-import { createSignal, type Component, For } from 'solid-js';
+import { type Component, For } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import FormNewItem from './form-new-item';
 import ItemCard from './item-card';
