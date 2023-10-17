@@ -28,7 +28,6 @@ export async function getFolders(): Promise<void> {
 
     const getFolders = localStorage.getItem(localStorageName);
 
-    console.log(getFolders);
     if(typeof getFolders === 'string') {
 
         const folders = JSON.parse(getFolders) as Folder[];

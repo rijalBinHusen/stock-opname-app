@@ -15,7 +15,7 @@ const App: Component = () => {
       
       <Switch fallback={<Home />}>
         <Match when={page() === "item"} ><ItemLists /></Match>
-        <Match when={page() === "stock"} ><StockFolder /></Match>
+        <Match when={page() === "folder"} ><StockFolder /></Match>
       </Switch>      
     </div>
   );

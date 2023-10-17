@@ -5,7 +5,7 @@ const Home: Component = () => {
   return (
     <div class="main-menu">
       <button onClick={ () => setPage("item")} class="main-menu-button button">Daftar item</button>
-      <button onClick={ () => setPage("stock")} class="main-menu-button button">Stock opname</button>
+      <button onClick={ () => setPage("folder")} class="main-menu-button button">Stock opname</button>
     </div>
   );
 };
