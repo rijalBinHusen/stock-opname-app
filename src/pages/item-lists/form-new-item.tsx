@@ -1,7 +1,7 @@
 import { Accessor,  JSX, Setter, Show } from 'solid-js';
 
 export interface AddItemProps {
-  addItem: Function
+  handleItem: Function
   itemName: Accessor<string>
   setItem: Setter<string>
   isEditMode: Accessor<boolean>
@@ -13,7 +13,7 @@ function FormNewItem (props: AddItemProps) {
   const addItem: JSX.EventHandler<HTMLButtonElement, MouseEvent> = (event) => {
     
     event.preventDefault();
-    props.addItem();
+    props.handleItem();
   }
 
   return (

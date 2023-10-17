@@ -11,7 +11,7 @@ export default function ItemCard (props: Item) {
   return (
     <div class="item-card">
         <span>{props.itemName}</span>
-        <Button color="secondary" text="Edit" onClick={ () => props.editItem(props.itemName)} />
+        <Button color="secondary" text="Edit" onClick={ () => props.editItem(props.itemId)} />
     </div>
   );
 };

@@ -2,12 +2,13 @@ import { type Component, For, JSX, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import FormNewItem from './form-new-item';
 import ItemCard from './item-card';
-import { type Item, items, addItem, getItems } from "./function";
+import { type Item, items, addItem, getItems, getItemById, updateItemById } from "./function";
 
 const ItemLists: Component = () => {
 
   const [itemName, setItemName] = createSignal("");
   const [isEditMode, setEditMode] = createSignal(false);
+  let itemIdEdit = "";
   
 
   getItems();
@@ -16,14 +17,21 @@ const ItemLists: Component = () => {
 
     setItemName("");
     setEditMode(false);
+    itemIdEdit = "";
   }
 
-  const editItemById: JSX.EventHandler<HTMLButtonElement, MouseEvent> = (event) => {
+  const editItemById: JSX.EventHandler<HTMLButtonElement, MouseEvent> = async (event) => {
 
     if(typeof event === "string" && event !== "") {
 
-      setItemName(event);
-      setEditMode(true);
+      const item = await getItemById(event);
+      
+      if(item?.itemName) {
+
+        setItemName(item.itemName);
+        itemIdEdit = item.itemId;
+        setEditMode(true);
+      }
     }
   }
 
@@ -31,7 +39,13 @@ const ItemLists: Component = () => {
 
     if(itemName() == "") return;
 
-    addItem(itemName());
+    if(itemIdEdit != "") {
+
+      updateItemById(itemIdEdit, itemName());
+    } else {
+
+      addItem(itemName());
+    }
     resetForm();
   }
 
@@ -40,7 +54,7 @@ const ItemLists: Component = () => {
         <h1>Daftar item</h1>
 
         <FormNewItem 
-          addItem={createNewItem} 
+          handleItem={createNewItem} 
           itemName={itemName} 
           setItem={setItemName}
           isEditMode={isEditMode}

@@ -35,6 +35,27 @@ export async function getItems(): Promise<void> {
     }
 }
 
+export async function getItemById(itemId: string): Promise<Item|void> {
+    const findIndex = items().findIndex((rec) => rec.itemId === itemId);
+
+    if(findIndex > -1) {
+
+        return items()[findIndex]
+    }
+}
+
+export async function updateItemById(itemId: string, itemName: string) {
+    const newItems = items().map((rec) => {
+        if(rec.itemId === itemId) {
+            return { itemId, itemName }
+        }
+        return rec
+    })
+
+    setItem(newItems);
+    saveToLocalStorage();
+}
+
 function saveToLocalStorage() {
     const itemsState = JSON.stringify(items());
 
