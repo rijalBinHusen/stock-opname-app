@@ -6,8 +6,9 @@ export interface Folder {
     folderCounter: number
 }
   
-  const state = <Folder[]>[];
-  const localStorageName = "stock-folder";
+const state = <Folder[]>[];
+const localStorageName = "stock-folder";
+export const [folderActive, setFolderActive] = createSignal("");
 
 export const [folders, setFolders] = createSignal(state);
 
