@@ -18,8 +18,9 @@ export interface stockDetails extends Stock {
 }
   
   const state = <stockDetails[]>[];
-  const localStorageName = "stock";
+  const localStorageName = "stock-opname-list";
 
+export const [currentFolder, setCurrentFolder ] = createSignal("");
 export const [stocks, setStocks] = createSignal(state);
 
 export async function addStock(itemId: string, height_stock: number, width_stock: number, length_stock: number, hole_stock: number, addition_stock: number, folder_id: string): Promise<void> {

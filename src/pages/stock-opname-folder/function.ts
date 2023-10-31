@@ -9,7 +9,6 @@ export interface Folder {
 const state = <Folder[]>[];
 const localStorageName = "stock-folder";
 export const [folderActive, setFolderActive] = createSignal("");
-
 export const [folders, setFolders] = createSignal(state);
 
 export async function addFolder(folderName: string): Promise<void> {

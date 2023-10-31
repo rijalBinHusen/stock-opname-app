@@ -3,6 +3,8 @@ import Navigation from '../../components/Navigations/Navigation';
 import FormNewItem from './FormFolder';
 import FolderCard from './FolderCard';
 import { type Folder, folders, addFolder, getFolders, getFolderById, updateFolderNameById } from "./function";
+import { setCurrentFolder } from "../stock-opname-lists/function";
+import { setPage } from "../../components/Navigations/navigation-state";
 
 const ItemLists: Component = () => {
 
@@ -53,6 +55,11 @@ const ItemLists: Component = () => {
     alert("Function is not implemented yet!");
   }
 
+  function chooseCurrentFolder(idFolder: string) {
+    setPage("stock-list")
+    setCurrentFolder(idFolder);
+  }
+
   return (
     <>
         <h1>Stock folder</h1>
@@ -77,6 +84,7 @@ const ItemLists: Component = () => {
                   editFolder={ editFolderById } 
                   folderCounter={folder.folderCounter}
                   duplicateFolder={duplicateFolder}
+                  chooseFolder={chooseCurrentFolder}
                 />
               )
             }}

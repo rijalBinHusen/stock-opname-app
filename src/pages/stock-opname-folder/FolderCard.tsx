@@ -7,11 +7,12 @@ interface Item {
     folderCounter: number
     editFolder: Function
     duplicateFolder: Function
+    chooseFolder: Function
 }
 
 export default function ItemCard (props: Item) {
   return (
-    <div class="item-card item-card-pointer">
+    <div class="item-card item-card-pointer" onClick={() => props.chooseFolder(props.folderId)}>
           <span>{ props.folderName }</span>
           <div>
 
