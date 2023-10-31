@@ -1,8 +1,7 @@
 import { type Component, For, JSX, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
-import FormNewItem from './StockOpnameForm';
-import FolderCard from './StockOpnameCard';
-import { type stockDetails, getstocks, getStockByFolderId } from "./function";
+import StockOpnameCard from "./StockOpnameCard";
+import { type stockDetails, getstocks, getStockByFolderId, stocks } from "./function";
 import { folderActive } from "../stock-opname-folder/function";
 
 const StockLists: Component = () => {
@@ -29,48 +28,48 @@ const StockLists: Component = () => {
   //   }
   // }
 
-  // function createNewItem () {
+  function delete_stock () {
+    alert("Function is not implemented yet!");
+  }
 
-  //   if(folderName() == "") return;
-
-  //   if(itemIdEdit != "") {
-
-  //     updateFolderNameById(itemIdEdit, folderName());
-  //   } else {
-
-  //     addFolder(folderName());
-  //   }
-  //   resetForm();
-  // }
-
-  function duplicateFolder () {
+  function option_stock () {
     alert("Function is not implemented yet!");
   }
 
   return (
     <>
-        <h1>Stock folder</h1>
+      <h1>Folder title</h1>
+        
+      <div class="tab">
+        <button class="tablinks active">Stock opname</button>
+        <button class="tablinks">Hasil stock</button>
+      </div>
 
-        <FormNewItem 
-          handleFolder={createNewItem} 
-          folderName={folderName} 
-          setFolder={setFolderName}
-          isEditMode={isEditMode}
-          cancel={resetForm}
-        />
+      <div class="form-input">
+        <input type="text"  placeholder="Cari item" />
+        <button class="button">Cari</button>
+      </div>
 
-        <div class="lists-folder">
+        <div class="lists-stock">
           
-          <For each={folders()}>
-            {(folder: Folder) => {
+          <For each={stocks()}>
+            {(stock: stockDetails) => {
 
               return (
-                <FolderCard 
-                  folderId={folder.folderId} 
-                  folderName={folder.folderName} 
-                  editFolder={ editFolderById } 
-                  folderCounter={folder.folderCounter}
-                  duplicateFolder={duplicateFolder}
+                <StockOpnameCard 
+                  addition_stock={stock.addition_stock}
+                  date_stock={stock.date_stock}
+                  delete_stock={delete_stock}
+                  folder_id={stock.folder_id}
+                  height_stock={stock.height_stock}
+                  hole_stock={stock.hole_stock}
+                  itemId={stock.itemId}
+                  item_name={stock.item_name}
+                  length_stock={stock.length_stock}
+                  option={option_stock}
+                  stockId={stock.stockId}
+                  total_stock={stock.total_stock}
+                  width_stock={stock.width_stock}
                 />
               )
             }}

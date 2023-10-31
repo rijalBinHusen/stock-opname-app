@@ -10,6 +10,7 @@ export interface Stock {
     hole_stock: number
     addition_stock: number
     folder_id: string
+    date_stock: string
 }
 
 export interface stockDetails extends Stock {
@@ -23,7 +24,7 @@ export interface stockDetails extends Stock {
 export const [currentFolder, setCurrentFolder ] = createSignal("");
 export const [stocks, setStocks] = createSignal(state);
 
-export async function addStock(itemId: string, height_stock: number, width_stock: number, length_stock: number, hole_stock: number, addition_stock: number, folder_id: string): Promise<void> {
+export async function addStock(itemId: string, height_stock: number, width_stock: number, length_stock: number, hole_stock: number, addition_stock: number, folder_id: string, date_stock: string): Promise<void> {
 
     const stockId = stocks().length + 1 + '';
     
@@ -43,7 +44,8 @@ export async function addStock(itemId: string, height_stock: number, width_stock
         addition_stock,
         total_stock,
         item_name,
-        folder_id
+        folder_id,
+        date_stock
     }, ...stocks]);
 
     saveToLocalStorage();

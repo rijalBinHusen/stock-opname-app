@@ -1,24 +1,38 @@
 
 import Button from "../../components/Button"
+import type { stockDetails } from "./function";
 
-interface Item {
-    folderName: string
-    folderId: string
-    folderCounter: number
-    editFolder: Function
-    duplicateFolder: Function
+interface StockProps extends stockDetails {
+    option: Function
+    delete_stock: Function
 }
 
-export default function ItemCard (props: Item) {
+export default function StockCard (props: StockProps) {
   return (
-    <div class="item-card item-card-pointer">
-          <span>{ props.folderName }</span>
-          <div>
-
-            <span class="badge">{ props.folderCounter }</span>
-            <Button color="secondary" text="Edit" onClick={ () => props.editFolder(props.folderId)} />
-            <Button color="secondary" text="❏ Gandakan" onClick={ () => props.duplicateFolder(props.folderId)} />
-          </div>
-        </div>
+    <div class="stock-opname-card">
+      <div class="stock-opname-info">
+        <span>{props.item_name}</span>
+        <span>
+          {props.length_stock}
+          *
+          {props.height_stock}
+          *
+          {props.length_stock}
+          +
+          {props.addition_stock}
+          -
+          {props.hole_stock}
+          = 
+          <span class="total">
+            {props.total_stock}
+          </span>
+        </span>
+        <span>{props.date_stock}</span>
+      </div>
+      <div class="stock-opname-option">
+        <button class="secondary-color" onClick={ () => props.option(props.stockId)}>Opsi</button>
+        <button class="danger" onClick={ () => props.delete_stock(props.stockId)}>Delete</button>
+      </div>
+  </div>
   );
 };
