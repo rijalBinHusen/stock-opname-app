@@ -1,5 +1,6 @@
-import { Accessor,  JSX, Setter, Show, createSignal } from 'solid-js';
+import { createSignal } from 'solid-js';
 import { Stock, addStock, currentFolderId } from "./function";
+import { setPage } from "../../components/Navigations/navigation-state";
 
 function StockForm () {
 
@@ -75,6 +76,7 @@ function StockForm () {
         />
         
         <input type="button" class="secondary-color" value="Tambahkan" onClick={submitStock}/>
+        <input type="button" class="danger" value="Batal" onClick={() => setPage("stock-list")}/>
       </div>
     </div>
   );
