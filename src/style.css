@@ -14,8 +14,7 @@ h1 {
 
 .container {
   max-width: calc(100vw - 2rem);
-  max-height: 1024px;
-  height: 100vh;
+  min-height: 100vh;
   min-width: 375px;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -238,7 +237,7 @@ h1 {
   font-size: 1.5rem;
 }
 
-.modal-stock-opname input {
+.modal-stock-opname input, select {
   width: 100%;
   height: 2rem;
   font-size: 1.2rem;

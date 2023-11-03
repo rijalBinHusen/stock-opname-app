@@ -1,6 +1,7 @@
 import { createSignal } from 'solid-js';
 import { Stock, addStock, currentFolderId } from "./function";
 import { setPage } from "../../components/Navigations/navigation-state";
+import { items, getItems } from "../item-lists/function";
 
 function StockForm () {
 
@@ -18,8 +19,27 @@ function StockForm () {
 
   function submitStock () {
     const { addition_stock, date_stock, height_stock, hole_stock, itemId, length_stock, width_stock } = stock();
-    addStock(itemId, height_stock, width_stock, length_stock, hole_stock, addition_stock, currentFolderId(), date_stock)
+    let message = "";
+    // item can'be null
+    if(itemId === "") {
+      message += "Item tidak boleh kosong";
+    }
+    
+    if(currentFolderId() === "") {
+      message += "Item tidak boleh kosong";
+    }
+
+    if(message !== "") {
+      alert(message);
+      return;
+    }
+
+    addStock(itemId, height_stock, width_stock, length_stock, hole_stock, addition_stock, currentFolderId(), date_stock);
+    // go to page stock list;
+    setPage("stock-list");
   }
+  
+  getItems();
 
   return (
 
@@ -28,12 +48,16 @@ function StockForm () {
       <div class="form-stock-opname">
 
         <label for="product-name">Nama produk</label>
-        <input 
+        <select onChange={(e) => setStock({ ...stock(), itemId: e.currentTarget.value })} id="product-name">
+          <option value="">Pilih item</option>
+          {items().map(item => <option value={item.itemId}>{item.itemName}</option>)}
+        </select>
+        {/* <input 
           id="product-name"
           type="text" 
           placeholder="Nama item"
           onInput={(e) => setStock({ ...stock(), itemId: e.currentTarget.value })}
-        />
+        /> */}
 
         <label for="width-stack">Lebar penataan</label>
         <input 
