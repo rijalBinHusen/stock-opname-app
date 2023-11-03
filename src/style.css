@@ -127,6 +127,7 @@ h1 {
 .stock-opname-card .total {
   font-weight: bolder;
   font-size: larger;
+  margin-left: 0.5rem;
 }
 
 /* Style the tab */

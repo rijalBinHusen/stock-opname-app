@@ -18,15 +18,15 @@ export interface stockDetails extends Stock {
     item_name: string
 }
   
-  const state = <stockDetails[]>[];
-  const localStorageName = "stock-opname-list";
+const state = <stockDetails[]>[];
+const localStorageName = "stock-opname-list";
 
 export const [currentFolderId, setCurrentFolderId ] = createSignal("");
 export const [stocks, setStocks] = createSignal(state);
 
 export async function addStock(itemId: string, height_stock: number, width_stock: number, length_stock: number, hole_stock: number, addition_stock: number, folder_id: string, date_stock: string): Promise<void> {
 
-    const stockId = stocks().length + 1 + '';
+    const stockId = new Date().getTime() + '';
     
     if(stocks.length === 0) { await getstocks(); };
 
@@ -59,14 +59,29 @@ export async function getstocks(): Promise<void> {
 
     if(typeof getstocks === 'string') {
 
-        const stocks = JSON.parse(getstocks) as stockDetails[];
+        const stocks = JSON.parse(getstocks) as Stock[];
+        const stockDetails = <stockDetails[]>[];
 
-        setStocks(stocks);
+        for(let stock of stocks) {
+            
+            const total_stock = (stock.height_stock * stock.width_stock * stock.length_stock) + stock.addition_stock - stock.hole_stock;
+            const getItem = await getItemById(stock.itemId);
+            const item_name = getItem ? getItem?.itemName : 'Item tidak ditemukan';
+            stockDetails.push({...stock, total_stock, item_name});
+        }
+
+        setStocks(stockDetails);
     }
 }
 
 export function getStockByFolderId(folderId: string): stockDetails[] {
     return stocks().filter((stock) => stock.folder_id === folderId);
+}
+
+export async function removeStockById(stockId: string): Promise<void> {
+    
+    setStocks((stocks) => stocks.filter((stock) => stock.stockId !== stockId))
+    saveToLocalStorage();
 }
 
 // export async function getFolderById(folderId: string): Promise<Stock|void> {
@@ -103,7 +118,19 @@ export function getStockByFolderId(folderId: string): stockDetails[] {
 // }
 
 function saveToLocalStorage() {
-    const itemsState = JSON.stringify(stocks());
+    const removeUnusedKeyValue:Stock[] = stocks().map((stock) => ({
+        addition_stock: stock.addition_stock, 
+        date_stock: stock.date_stock, 
+        folder_id: stock.folder_id, 
+        height_stock: stock.height_stock, 
+        hole_stock: stock.hole_stock, 
+        itemId: stock.itemId, 
+        length_stock: stock.length_stock, 
+        stockId: stock.stockId, 
+        width_stock: stock.width_stock
+    }))
+
+    const itemsState = JSON.stringify(removeUnusedKeyValue);
 
     localStorage.setItem(localStorageName, itemsState);
 }

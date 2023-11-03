@@ -1,7 +1,7 @@
 import { type Component, For, JSX, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import StockOpnameCard from "./StockOpnameCard";
-import { type stockDetails, getstocks, getStockByFolderId, stocks } from "./function";
+import { type stockDetails, getstocks, getStockByFolderId, stocks, removeStockById } from "./function";
 import { folderActive } from "../stock-opname-folder/function";
 
 const StockLists: Component = () => {
@@ -28,8 +28,9 @@ const StockLists: Component = () => {
   //   }
   // }
 
-  function delete_stock () {
-    alert("Function is not implemented yet!");
+  function delete_stock (stockId: string) {
+    const confirm = window.confirm("Apakah anda yakin akan menghapus stock tersebut?");
+    if(confirm) removeStockById(stockId);
   }
 
   function option_stock () {
