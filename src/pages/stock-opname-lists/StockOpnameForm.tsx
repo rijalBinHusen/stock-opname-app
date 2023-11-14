@@ -1,11 +1,16 @@
-import { createSignal } from 'solid-js';
+import { Show, createSignal } from 'solid-js';
 import { Stock, addStock, currentFolderId } from "./function";
 import { setPage } from "../../components/Navigations/navigation-state";
-import { items, getItems } from "../item-lists/function";
+import { items, getItems, addItem } from "../item-lists/function";
 
 function StockForm () {
 
-  const [stock, setStock] = createSignal<Stock>({
+  interface StockForm extends Stock {
+    is_new_item: boolean
+    new_item_name?: string
+  }
+
+  const [stock, setStock] = createSignal<StockForm>({
     addition_stock: 0,
     date_stock: '',
     folder_id: '',
@@ -14,11 +19,18 @@ function StockForm () {
     itemId: '',
     length_stock: 0,
     stockId: '',
-    width_stock: 0
+    width_stock: 0,
+    is_new_item: false
   });
 
-  function submitStock () {
-    const { addition_stock, date_stock, height_stock, hole_stock, itemId, length_stock, width_stock } = stock();
+  async function submitStock () {
+    let { addition_stock, date_stock, height_stock, hole_stock, itemId, length_stock, width_stock, is_new_item, new_item_name } = stock();
+
+    if(is_new_item && typeof new_item_name ==='string' && new_item_name !== "") {
+      
+      itemId = await addItem(new_item_name);
+    }
+
     let message = [];
     // item can'be null
     if(itemId === "") message.push("Item tidak boleh kosong");
@@ -46,16 +58,35 @@ function StockForm () {
       <div class="form-stock-opname">
 
         <label for="product-name">Nama produk</label>
-        <select onChange={(e) => setStock({ ...stock(), itemId: e.currentTarget.value })} id="product-name">
-          <option value="">Pilih item</option>
-          {items().map(item => <option value={item.itemId}>{item.itemName}</option>)}
-        </select>
-        {/* <input 
+
+        <div>
+          <input onChange={() => setStock({ ...stock(), is_new_item: !stock().is_new_item})} type="checkbox" id="is-new-item" />
+          <label for="is-new-item">Produk baru</label>
+        </div>
+
+        <Show 
+          when={!stock().is_new_item}
+        >
+          <select 
+            onChange={(e) => setStock({ ...stock(), itemId: e.currentTarget.value })} 
+            id="product-name"
+            >
+            <option value="">Pilih item</option>
+            {items().map(item => <option value={item.itemId}>{item.itemName}</option>)}
+          </select>
+        </Show>
+
+
+        <Show 
+          when={stock().is_new_item}
+        >
+        <input 
           id="product-name"
           type="text" 
-          placeholder="Nama item"
-          onInput={(e) => setStock({ ...stock(), itemId: e.currentTarget.value })}
-        /> */}
+          placeholder="Masukkan nama item baru"
+          onInput={(e) => setStock({ ...stock(), new_item_name: e.currentTarget.value })}
+        />
+        </Show>
 
         <label for="width-stack">Lebar penataan</label>
         <input 

@@ -10,7 +10,7 @@ export interface Item {
 
 export const [items, setItem] = createSignal(state);
 
-export async function addItem(itemName: string): Promise<void> {
+export async function addItem(itemName: string): Promise<string> {
 
     const itemId = items().length + 1 + '';
     
@@ -19,6 +19,8 @@ export async function addItem(itemName: string): Promise<void> {
     setItem((items) => [{ itemId, itemName }, ...items]);
 
     saveToLocalStorage();
+
+    return itemId;
 }
 
 export async function getItems(): Promise<void> {
