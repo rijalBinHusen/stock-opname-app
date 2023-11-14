@@ -19,18 +19,16 @@ function StockForm () {
 
   function submitStock () {
     const { addition_stock, date_stock, height_stock, hole_stock, itemId, length_stock, width_stock } = stock();
-    let message = "";
+    let message = [];
     // item can'be null
-    if(itemId === "") {
-      message += "Item tidak boleh kosong";
-    }
-    
-    if(currentFolderId() === "") {
-      message += "Item tidak boleh kosong";
-    }
+    if(itemId === "") message.push("Item tidak boleh kosong");
+    if(currentFolderId() === "") message.push("Silahkan kembali ke halaman sebelumnya");
+    if(height_stock === 0) message.push("Tinggi tumpukan tidak boleh kosong");
+    if(length_stock === 0) message.push("Panjang tumpukan tidak boleh kosong");
+    if(width_stock === 0) message.push("Lebar tumpukan tidak boleh kosong");
 
-    if(message !== "") {
-      alert(message);
+    if(message.length) {
+      alert(message.join(", "));
       return;
     }
 
