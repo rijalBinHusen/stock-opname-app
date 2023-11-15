@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 import { getItemById } from "../item-lists/function";
-import { folderActive, setFolderActive } from "../stock-opname-folder/function";
+import { folderActive, setFolderActive, updateFolderCounterById } from "../stock-opname-folder/function";
 
 export interface Stock {
     stockId: string
@@ -22,7 +22,6 @@ interface StockForm extends Stock {
 }
   
 const state = <stockDetails[]>[];
-const localStorageName = "stock-opname-list";
 
 
 export const [stocks, setStocks] = createSignal(state);
@@ -56,6 +55,8 @@ export async function addStock(itemId: string, stockNumber: string, folder_id: s
         date_stock
     }, ...stocks]);
 
+    updateFolderCounterById(folder_id, +1)
+
     saveToLocalStorage();
 }
 
@@ -63,7 +64,7 @@ export async function getstocks(): Promise<void> {
     
     if(stocks.length > 0) return;
 
-    const getstocks = localStorage.getItem(localStorageName);
+    const getstocks = localStorage.getItem(folderActive());
 
     if(typeof getstocks === 'string') {
 
@@ -88,8 +89,17 @@ export function getStockByFolderId(folderId: string): stockDetails[] {
 
 export async function removeStockById(stockId: string): Promise<void> {
     
-    setStocks((stocks) => stocks.filter((stock) => stock.stockId !== stockId))
-    saveToLocalStorage();
+    const findIndexStock = stocks().findIndex((rec) => rec.stockId === stockId);
+
+    if(findIndexStock > -1) {
+
+        updateFolderCounterById(stocks()[findIndexStock].folder_id, -1)
+
+        const stockRemoved = stocks().splice(findIndexStock, 1);
+        setStocks(stockRemoved);
+    
+        saveToLocalStorage();
+    }
 }
 
 export async function getStockById(stockId: string): Promise<Stock|void> {
@@ -134,7 +144,7 @@ function saveToLocalStorage() {
         stockNumber: stock.stockNumber
     }))
 
-    const itemsState = JSON.stringify(removeUnusedKeyValue);
+    const stocksState = JSON.stringify(removeUnusedKeyValue);
 
-    localStorage.setItem(localStorageName, itemsState);
+    localStorage.setItem(folderActive(), stocksState);
 }

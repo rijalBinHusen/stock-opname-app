@@ -60,7 +60,7 @@ export async function updateFolderNameById(folderId: string, folderName: string)
 export async function updateFolderCounterById(folderId: string, folderCounter: number) {
     const newfolders = folders().map((rec) => {
         if(rec.folderId === folderId) {
-            return { ...rec, folderCounter }
+            return { ...rec, folderCounter: rec.folderCounter + folderCounter }
         }
         return rec
     })
