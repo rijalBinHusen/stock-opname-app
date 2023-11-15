@@ -103,6 +103,7 @@ function StockForm () {
           value={stock().stockNumber}
           onFocus={() => setStock({ ...stock(), isCalcMode: true })}
         />
+        <span>Total: {eval(stock().stockNumber)}</span>
 
         <label for="stock-note">Catatan stock</label>
         <input 
