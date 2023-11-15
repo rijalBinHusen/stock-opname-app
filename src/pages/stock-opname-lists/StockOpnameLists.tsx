@@ -53,8 +53,6 @@ const StockLists: Component = () => {
     if(getFolder) {
       setFolderName(getFolder.folderName)
     }
-
-    console.log(folderActive())
   }
 
   getFolderName();

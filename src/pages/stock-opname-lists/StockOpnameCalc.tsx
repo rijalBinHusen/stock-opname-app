@@ -58,11 +58,11 @@ function StockCalc (props:calcProps) {
         <br/>
 
 
-        <input type="button" value="()" onClick={addBracket}/>
+        <input type="button" value="( )" onClick={addBracket}/>
         <input type="button" value="0" onClick={() => setStockSum(stockSum() + '0')}/>
         <input type="button" value="&#x21A9;" onClick={backward}/>
           
-        <input type="button" value="Ok" onClick={() => props.setStockInfo(stockSum())}/>
+        <input type="button" value="OK" onClick={() => props.setStockInfo(stockSum())}/>
         <br />
         
         <br />

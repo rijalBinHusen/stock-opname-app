@@ -12,8 +12,8 @@ interface Item {
 
 export default function ItemCard (props: Item) {
   return (
-    <div class="item-card item-card-pointer" onClick={() => props.chooseFolder(props.folderId)}>
-          <span>{ props.folderName }</span>
+    <div class="item-card item-card-pointer">
+          <span onClick={() => props.chooseFolder(props.folderId)}>{ props.folderName }</span>
           <div>
 
             <span class="badge">{ props.folderCounter }</span>
