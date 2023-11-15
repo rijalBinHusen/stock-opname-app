@@ -2,12 +2,13 @@ import { type Component, For, JSX, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import StockOpnameCard from "./StockOpnameCard";
 import { type stockDetails, getstocks, getStockByFolderId, stocks, removeStockById, getStockById, setCurrentStock } from "./function";
-import { folderActive } from "../stock-opname-folder/function";
+import { folderActive, getFolderById } from "../stock-opname-folder/function";
 import { setPage } from '../../components/Navigations/navigation-state';
 
 const StockLists: Component = () => {
 
   const [searchFolder, setSearchFolder] = createSignal("");
+  const [folderName, setFolderName] = createSignal("");
   
 
   getstocks().then(() => {
@@ -46,9 +47,21 @@ const StockLists: Component = () => {
     }
   }
 
+  async function getFolderName () {
+    const getFolder = await getFolderById(folderActive());
+
+    if(getFolder) {
+      setFolderName(getFolder.folderName)
+    }
+
+    console.log(folderActive())
+  }
+
+  getFolderName();
+
   return (
     <>
-      <h1>Folder title</h1>
+      <h1>{ folderName() }</h1>
         
       <div class="tab">
         <button class="tablinks active">Stock opname</button>

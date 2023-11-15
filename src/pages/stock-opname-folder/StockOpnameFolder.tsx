@@ -2,8 +2,7 @@ import { type Component, For, JSX, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import FormNewItem from './FormFolder';
 import FolderCard from './FolderCard';
-import { type Folder, folders, addFolder, getFolders, getFolderById, updateFolderNameById } from "./function";
-import { setCurrentFolderId } from "../stock-opname-lists/function";
+import { type Folder, folders, addFolder, getFolders, getFolderById, updateFolderNameById, setFolderActive } from "./function";
 import { setPage } from "../../components/Navigations/navigation-state";
 
 const ItemLists: Component = () => {
@@ -57,7 +56,7 @@ const ItemLists: Component = () => {
 
   function chooseCurrentFolder(idFolder: string) {
     setPage("stock-list")
-    setCurrentFolderId(idFolder);
+    setFolderActive(idFolder);
   }
 
   return (

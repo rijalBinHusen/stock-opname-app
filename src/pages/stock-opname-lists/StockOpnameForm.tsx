@@ -1,5 +1,6 @@
 import { Show } from 'solid-js';
-import { currentStock, setCurrentStock, addStock, currentFolderId } from "./function";
+import { currentStock, setCurrentStock, addStock } from "./function";
+import { folderActive } from "../stock-opname-folder/function";
 import { setPage } from "../../components/Navigations/navigation-state";
 import { items, getItems, addItem } from "../item-lists/function";
 import StockCalc from './StockOpnameCalc';
@@ -17,7 +18,7 @@ function StockForm () {
     let message = [];
     // item can'be null
     if(itemId === "") message.push("Item tidak boleh kosong");
-    if(currentFolderId() === "") message.push("Silahkan kembali dulu ke halaman utama");
+    if(folderActive() === "") message.push("Silahkan kembali dulu ke halaman utama");
     if(stockNumber === "") message.push("Hitungan stock tidak boleh kosong");
 
     if(message.length) {
@@ -25,7 +26,7 @@ function StockForm () {
       return;
     }
 
-    addStock(itemId, stockNumber, currentFolderId(), date_stock);
+    addStock(itemId, stockNumber, folderActive(), date_stock);
     emptyForm();
     // go to page stock list;
     setPage("stock-list");

@@ -1,5 +1,6 @@
 import { createSignal } from "solid-js";
 import { getItemById } from "../item-lists/function";
+import { folderActive, setFolderActive } from "../stock-opname-folder/function";
 
 export interface Stock {
     stockId: string
@@ -24,7 +25,6 @@ const state = <stockDetails[]>[];
 const localStorageName = "stock-opname-list";
 
 
-export const [currentFolderId, setCurrentFolderId ] = createSignal("");
 export const [stocks, setStocks] = createSignal(state);
 export const [currentStock, setCurrentStock] = createSignal<StockForm>({
     date_stock: '',

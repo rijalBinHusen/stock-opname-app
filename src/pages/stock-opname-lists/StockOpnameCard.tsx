@@ -21,7 +21,7 @@ export default function StockCard (props: StockProps) {
         <span>{props.date_stock}</span>
       </div>
       <div class="stock-opname-option">
-        <button class="secondary-color" onClick={ () => props.option(props.stockId)}>Opsi</button>
+        <button class="secondary-color" onClick={ () => props.option(props.stockId)}>Edit</button>
         <button class="danger" onClick={ () => props.delete_stock(props.stockId)}>Delete</button>
       </div>
   </div>
