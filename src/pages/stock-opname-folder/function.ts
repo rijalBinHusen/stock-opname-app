@@ -13,7 +13,8 @@ export const [folders, setFolders] = createSignal(state);
 
 export async function addFolder(folderName: string): Promise<void> {
 
-    const folderId = folders().length + 1 + '';
+    const randomString = (Math.random() + 1).toString(36).substring(8);
+    const folderId = randomString + folders().length + 1 + '';
     
     if(folders.length === 0) { await getFolders(); };
     
