@@ -13,7 +13,7 @@ export default function StockCard (props: StockProps) {
       <div class="stock-opname-info">
         <span>{props.item_name}</span>
         <span>
-          {props.stockNumber}
+          {props.stockNumber} =
           <span class="total">
             {props.total_stock}
           </span>

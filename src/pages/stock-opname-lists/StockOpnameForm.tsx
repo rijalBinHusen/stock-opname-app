@@ -121,7 +121,7 @@ function StockForm () {
       when={stock().isCalcMode}
     >
 
-      <StockCalc setStockInfo={setStockNumber} />
+      <StockCalc setStockInfo={setStockNumber} stockNumber={stock().stockNumber} />
     </Show>
     </div>
   );

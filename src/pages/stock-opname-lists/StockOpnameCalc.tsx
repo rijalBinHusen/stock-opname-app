@@ -3,11 +3,12 @@ import "./stockOpnameCalc.css";
 
 interface calcProps {
   setStockInfo: Function
+  stockNumber: string
 }
 
 function StockCalc (props:calcProps) {
 
-  const [stockSum, setStockSum] = createSignal<string>("0+1+2+3");
+  const [stockSum, setStockSum] = createSignal<string>(props.stockNumber);
 
   function addBracket() {
 
@@ -26,8 +27,6 @@ function StockCalc (props:calcProps) {
 
     setStockSum(stockSum().slice(0, -1));
   }
-
-  setStockSum("")
 
   return (
     <div class="formstyle">
