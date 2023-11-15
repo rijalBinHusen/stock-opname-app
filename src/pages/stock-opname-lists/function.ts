@@ -4,11 +4,7 @@ import { getItemById } from "../item-lists/function";
 export interface Stock {
     stockId: string
     itemId: string
-    height_stock: number
-    width_stock: number
-    length_stock: number
-    hole_stock: number
-    addition_stock: number
+    stockNumber: string
     folder_id: string
     date_stock: string
 }
@@ -24,24 +20,20 @@ const localStorageName = "stock-opname-list";
 export const [currentFolderId, setCurrentFolderId ] = createSignal("");
 export const [stocks, setStocks] = createSignal(state);
 
-export async function addStock(itemId: string, height_stock: number, width_stock: number, length_stock: number, hole_stock: number, addition_stock: number, folder_id: string, date_stock: string): Promise<void> {
+export async function addStock(itemId: string, stockNumber: string, folder_id: string, date_stock: string): Promise<void> {
 
     const stockId = new Date().getTime() + '';
     
     if(stocks.length === 0) { await getstocks(); };
 
-    const total_stock = (height_stock * width_stock * length_stock) + addition_stock - hole_stock;
+    const total_stock = eval(stockNumber);
     const getItem = await getItemById(itemId)
     const item_name = getItem ? getItem?.itemName : 'Item tidak ditemukan';
     
     setStocks((stocks) => [{
         stockId, 
-        itemId, 
-        height_stock,
-        width_stock,
-        length_stock,
-        hole_stock,
-        addition_stock,
+        itemId,
+        stockNumber,
         total_stock,
         item_name,
         folder_id,
@@ -64,7 +56,7 @@ export async function getstocks(): Promise<void> {
 
         for(let stock of stocks) {
             
-            const total_stock = (stock.height_stock * stock.width_stock * stock.length_stock) + stock.addition_stock - stock.hole_stock;
+            const total_stock = eval(stock.stockNumber);
             const getItem = await getItemById(stock.itemId);
             const item_name = getItem ? getItem?.itemName : 'Item tidak ditemukan';
             stockDetails.push({...stock, total_stock, item_name});
@@ -119,15 +111,11 @@ export async function removeStockById(stockId: string): Promise<void> {
 
 function saveToLocalStorage() {
     const removeUnusedKeyValue:Stock[] = stocks().map((stock) => ({
-        addition_stock: stock.addition_stock, 
         date_stock: stock.date_stock, 
         folder_id: stock.folder_id, 
-        height_stock: stock.height_stock, 
-        hole_stock: stock.hole_stock, 
         itemId: stock.itemId, 
-        length_stock: stock.length_stock, 
-        stockId: stock.stockId, 
-        width_stock: stock.width_stock
+        stockId: stock.stockId,
+        stockNumber: stock.stockNumber
     }))
 
     const itemsState = JSON.stringify(removeUnusedKeyValue);

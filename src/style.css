@@ -238,7 +238,7 @@ h1 {
   font-size: 1.5rem;
 }
 
-.modal-stock-opname input[type=text], input[type=number], input[type=button], select {
+.form-stock-opname input[type=text], input[type=number], input[type=button], select {
   width: 100%;
   height: 2rem;
   font-size: 1.2rem;

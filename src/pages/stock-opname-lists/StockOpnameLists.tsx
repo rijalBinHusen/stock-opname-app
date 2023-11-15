@@ -57,20 +57,16 @@ const StockLists: Component = () => {
             {(stock: stockDetails) => {
 
               return (
-                <StockOpnameCard 
-                  addition_stock={stock.addition_stock}
+                <StockOpnameCard
                   date_stock={stock.date_stock}
                   delete_stock={delete_stock}
                   folder_id={stock.folder_id}
-                  height_stock={stock.height_stock}
-                  hole_stock={stock.hole_stock}
                   itemId={stock.itemId}
                   item_name={stock.item_name}
-                  length_stock={stock.length_stock}
                   option={option_stock}
                   stockId={stock.stockId}
                   total_stock={stock.total_stock}
-                  width_stock={stock.width_stock}
+                  stockNumber={stock.stockNumber}
                 />
               )
             }}

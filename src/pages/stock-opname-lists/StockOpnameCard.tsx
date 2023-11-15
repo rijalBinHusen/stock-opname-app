@@ -13,11 +13,7 @@ export default function StockCard (props: StockProps) {
       <div class="stock-opname-info">
         <span>{props.item_name}</span>
         <span>
-          {props.length_stock} x 
-          {props.height_stock} x 
-          {props.length_stock} + 
-          {props.addition_stock} - 
-          {props.hole_stock} = 
+          {props.stockNumber}
           <span class="total">
             {props.total_stock}
           </span>

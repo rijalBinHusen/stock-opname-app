@@ -2,7 +2,7 @@ import { Setter, createSignal } from 'solid-js';
 import "./stockOpnameCalc.css";
 
 interface calcProps {
-  setStockInfo: Setter<string>
+  setStockInfo: Function
 }
 
 function StockCalc (props:calcProps) {
@@ -14,7 +14,8 @@ function StockCalc (props:calcProps) {
     let indexStartBracket = stockSum().lastIndexOf("(");
     let indexEndBracket = stockSum().lastIndexOf(")");
 
-    let isAddEndBracket = indexEndBracket === -1 || indexStartBracket > indexEndBracket
+    // let isAddStartBracket = ;
+    let isAddEndBracket = (indexEndBracket === -1 && indexStartBracket !== -1) || indexStartBracket > indexEndBracket
 
     if(isAddEndBracket) setStockSum(stockSum() + ")");
     else setStockSum(stockSum() + "(");
@@ -26,11 +27,13 @@ function StockCalc (props:calcProps) {
     setStockSum(stockSum().slice(0, -1));
   }
 
+  setStockSum("")
+
   return (
     <div class="formstyle">
       <form name="form1">
 
-        <input id="calc" type="text" name="answer"/> 
+        <input id="calc" disabled type="text" name="answer" value={stockSum()}/> 
         <br/>
         <br/>
         
