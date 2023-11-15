@@ -13,12 +13,28 @@ export interface stockDetails extends Stock {
     total_stock: number
     item_name: string
 }
+
+interface StockForm extends Stock {
+    is_new_item: boolean
+    isCalcMode: boolean
+    new_item_name?: string
+}
   
 const state = <stockDetails[]>[];
 const localStorageName = "stock-opname-list";
 
+
 export const [currentFolderId, setCurrentFolderId ] = createSignal("");
 export const [stocks, setStocks] = createSignal(state);
+export const [currentStock, setCurrentStock] = createSignal<StockForm>({
+    date_stock: '',
+    stockNumber: '',
+    folder_id: '',
+    itemId: '',
+    stockId: '',
+    is_new_item: false,
+    isCalcMode: false
+  });
 
 export async function addStock(itemId: string, stockNumber: string, folder_id: string, date_stock: string): Promise<void> {
 
@@ -76,14 +92,14 @@ export async function removeStockById(stockId: string): Promise<void> {
     saveToLocalStorage();
 }
 
-// export async function getFolderById(folderId: string): Promise<Stock|void> {
-//     const findIndex = stocks().findIndex((rec) => rec.stockId === folderId);
+export async function getStockById(stockId: string): Promise<Stock|void> {
+    const findIndex = stocks().findIndex((rec) => rec.stockId === stockId);
 
-//     if(findIndex > -1) {
+    if(findIndex > -1) {
 
-//         return stocks()[findIndex]
-//     }
-// }
+        return stocks()[findIndex]
+    }
+}
 
 // export async function updateFolderNameById(folderId: string, folderName: string) {
 //     const newstocks = stocks().map((rec) => {

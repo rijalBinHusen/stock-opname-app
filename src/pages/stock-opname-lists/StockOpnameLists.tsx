@@ -1,8 +1,9 @@
 import { type Component, For, JSX, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import StockOpnameCard from "./StockOpnameCard";
-import { type stockDetails, getstocks, getStockByFolderId, stocks, removeStockById } from "./function";
+import { type stockDetails, getstocks, getStockByFolderId, stocks, removeStockById, getStockById, setCurrentStock } from "./function";
 import { folderActive } from "../stock-opname-folder/function";
+import { setPage } from '../../components/Navigations/navigation-state';
 
 const StockLists: Component = () => {
 
@@ -33,8 +34,16 @@ const StockLists: Component = () => {
     if(confirm) removeStockById(stockId);
   }
 
-  function option_stock () {
-    alert("Function is not implemented yet!");
+  async function option_stock (stockId: string) {
+    const getStock = await getStockById(stockId);
+
+    if(getStock) {
+
+      let stockFormToSet = { ...getStock, is_new_item: false, isCalcMode: false}
+      setCurrentStock(stockFormToSet);
+
+      setPage("stock-add");
+    }
   }
 
   return (
