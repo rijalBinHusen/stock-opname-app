@@ -137,7 +137,12 @@ const StockLists: Component = () => {
             </For>
           </Show>
         </div>
-        <Navigation />
+        <Show
+            when={currentTab() === "stocks"}
+          >
+
+          <Navigation />
+        </Show>
     </>
   );
 };
