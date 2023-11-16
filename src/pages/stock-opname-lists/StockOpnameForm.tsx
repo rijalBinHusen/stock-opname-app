@@ -77,10 +77,14 @@ function StockForm () {
 
         <label for="product-name">Nama produk</label>
 
-        <div>
-          <input onChange={() => setCurrentStock({ ...currentStock(), is_new_item: !currentStock().is_new_item})} type="checkbox" id="is-new-item" />
-          <label for="is-new-item">Produk baru</label>
-        </div>
+        <Show
+          when={!isEditMode}
+        >
+          <div>
+            <input onChange={() => setCurrentStock({ ...currentStock(), is_new_item: !currentStock().is_new_item})} type="checkbox" id="is-new-item" />
+            <label for="is-new-item">Produk baru</label>
+          </div>
+        </Show>
 
         <Show 
           when={!currentStock().is_new_item}
@@ -88,6 +92,7 @@ function StockForm () {
           <select 
             onChange={(e) => setCurrentStock({ ...currentStock(), itemId: e.currentTarget.value })} 
             id="product-name"
+            disabled={isEditMode}
             >
             <option value="">Pilih item</option>
             {items().map(item => <option selected={item.itemId === currentStock().itemId} value={item.itemId}>{item.itemName}</option>)}
