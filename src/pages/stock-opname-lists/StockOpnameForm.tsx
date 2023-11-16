@@ -42,6 +42,15 @@ function StockForm () {
 
   function setStockNumber(e: string) {
     
+    try {
+
+      eval(e);
+    } catch(err) {
+
+      console.log(err)
+      alert("Tidak melakukan perhitungan pada data yang dimasukkan")
+      return
+    }
     setCurrentStock({...currentStock(), stockNumber: e, isCalcMode: false})
   }
 
