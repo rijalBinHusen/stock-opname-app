@@ -1,25 +1,38 @@
 import { describe, it, expect } from "vitest";
 import { addItem, getItemById, getItems, updateItemById, items } from "./function";
+import { faker } from "@faker-js/faker"
 
 describe('Item services', () => {
-    const itemNameToSet = "newItem";
-    const itemNameToUpdate = "updatedItem"
-    let itemId = "";
+    const itemNameToSet = <string[]>[];
+    let itemId = <string[]>[];
+
+    for(let i =0; i < 10; i++) {
+        itemNameToSet.push(faker.animal.fish())
+    }
 
     it("Should be return item id", async () => {
-        itemId = await addItem(itemNameToSet);
+
+        for(let itemName of itemNameToSet) {
+            const itemIdCreated = await addItem(itemName);
+            itemId.push(itemIdCreated)
+        }
 
         await getItems();
 
-        expect(items()[0].itemName).equal(itemNameToSet);
+        expect(itemId.length).equal(itemNameToSet.length);
+        expect(items().length).equal(itemNameToSet.length);
     })
 
     it("Item should be updated", async () => {
-        await updateItemById(itemId, itemNameToUpdate);
 
-        const getUpdatedItem = await getItemById(itemId);
+        for(let idItem of itemId) {
+            const itemNameToUpdate = faker.animal.bird();
 
-        expect(getUpdatedItem?.itemName).equal(itemNameToUpdate);
+            await updateItemById(idItem, itemNameToUpdate);
+            const getUpdatedItem = await getItemById(idItem);
+    
+            expect(getUpdatedItem?.itemName).equal(itemNameToUpdate);
+        }
     })
 
 
