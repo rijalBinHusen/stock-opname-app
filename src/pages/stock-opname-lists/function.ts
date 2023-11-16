@@ -98,9 +98,7 @@ export async function removeStockById(stockId: string): Promise<void> {
     if(findIndexStock > -1) {
 
         updateFolderCounterById(stocks()[findIndexStock].folder_id, -1)
-
-        const stockRemoved = stocks().splice(findIndexStock, 1);
-        setStocks(stockRemoved);
+        setStocks((stocks) => stocks.filter((stock) => stock.stockId !== stockId))
     
         saveToLocalStorage();
     }
