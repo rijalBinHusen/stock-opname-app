@@ -115,29 +115,17 @@ export async function getStockById(stockId: string): Promise<Stock|void> {
     }
 }
 
-// export async function updateFolderNameById(folderId: string, folderName: string) {
-//     const newstocks = stocks().map((rec) => {
-//         if(rec.stockId === folderId) {
-//             return { ...rec, folderName }
-//         }
-//         return rec
-//     })
+export async function updateStockById(stockId: string, stockNumber: string, date_stock: string) {
+    const newstocks = stocks().map((rec) => {
+        if(rec.stockId === stockId) {
+            return { ...rec, stockNumber, date_stock }
+        }
+        return rec
+    })
 
-//     setstocks(newstocks);
-//     saveToLocalStorage();
-// }
-
-// export async function updateFolderCounterById(folderId: string, folderCounter: number) {
-//     const newstocks = stocks().map((rec) => {
-//         if(rec.folderId === folderId) {
-//             return { ...rec, folderCounter }
-//         }
-//         return rec
-//     })
-
-//     setstocks(newstocks);
-//     saveToLocalStorage();
-// }
+    setStocks(newstocks);
+    saveToLocalStorage();
+}
 
 function saveToLocalStorage() {
     const getStocks = getStockByFolderId(folderActive())

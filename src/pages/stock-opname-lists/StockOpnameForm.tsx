@@ -1,11 +1,13 @@
 import { Show } from 'solid-js';
-import { currentStock, setCurrentStock, addStock } from "./function";
+import { currentStock, setCurrentStock, addStock, updateStockById } from "./function";
 import { folderActive } from "../stock-opname-folder/function";
 import { setPage } from "../../components/Navigations/navigation-state";
 import { items, getItems, addItem } from "../item-lists/function";
 import StockCalc from './StockOpnameCalc';
 
 function StockForm () {
+
+  const isEditMode = currentStock().stockId !== "";
 
   async function submitStock () {
     let { date_stock, stockNumber, itemId, is_new_item, new_item_name } = currentStock();
@@ -26,10 +28,16 @@ function StockForm () {
       return;
     }
 
-    addStock(itemId, stockNumber, folderActive(), date_stock);
+    if(isEditMode) updateStockById(currentStock().stockId, currentStock().stockNumber, currentStock().date_stock);
+    else await createStock(itemId, stockNumber, date_stock);
+
     emptyForm();
     // go to page stock list;
     setPage("stock-list");
+  }
+
+  async function createStock (itemId: string, stockNumber: string, date_stock: string) {
+    addStock(itemId, stockNumber, folderActive(), date_stock);
   }
 
   function setStockNumber(e: string) {
@@ -115,7 +123,7 @@ function StockForm () {
           placeholder="Catatan stock"
         />
         
-        <input type="button" class="secondary-color" value="Tambahkan" onClick={submitStock}/>
+        <input type="button" class="secondary-color" value={isEditMode ? 'Update' : 'Tambahkan'} onClick={submitStock}/>
         <input type="button" class="danger" value="Batal" onClick={cancelForm}/>
       </div>
     </Show>
