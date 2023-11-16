@@ -84,10 +84,14 @@ const StockLists: Component = () => {
         </button>
       </div>
 
-      <div class="form-input">
-        <input type="text"  placeholder="Cari item" />
-        <button class="button">Cari</button>
-      </div>
+      <Show
+        when={currentTab() === "stocks"}
+      >
+        <div class="form-input">
+          <input type="text"  placeholder="Cari item" />
+          <button class="button">Cari</button>
+        </div>
+      </Show>
 
         <div class="lists-stock">
 
