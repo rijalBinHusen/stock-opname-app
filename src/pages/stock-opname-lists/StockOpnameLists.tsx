@@ -6,12 +6,13 @@ import { folderActive, getFolderById } from "../stock-opname-folder/function";
 import { setPage } from '../../components/Navigations/navigation-state';
 import StockResultCard from "./StockResultCard";
 
-const StockLists: Component = () => {
 
-  const [searchItem, setSearchItem] = createSignal("");
+const StockLists: Component = () => {
+  
   const [folderName, setFolderName] = createSignal("");
   const [currentTab, setCurrentTab] = createSignal("stocks");
   const [stocksToShow, setStockToShow] = createSignal<stockDetails[]>([])
+  const [searchItem, setSearchItem] = createSignal("");
 
 
   getStocks().then(() => setStockToShow(stocks()))
@@ -49,7 +50,9 @@ const StockLists: Component = () => {
   }
 
   async function detailStock(itemName: string) {
-    alert("Function not implemented yet");
+    
+    setSearchItem(itemName);
+    setCurrentTab("stocks")
   }
 
   getFolderName();
