@@ -1,9 +1,10 @@
-import { type Component, For, JSX, createSignal } from 'solid-js';
+import { type Component, For, Show, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import StockOpnameCard from "./StockOpnameCard";
-import { type stockDetails, getStocks, getStockByFolderId, stocks, removeStockById, getStockById, setCurrentStock } from "./function";
+import { type stockDetails, getStocks, getStockByFolderId, stocks, removeStockById, getStockById, setCurrentStock, getResultStock, ResultStock } from "./function";
 import { folderActive, getFolderById } from "../stock-opname-folder/function";
 import { setPage } from '../../components/Navigations/navigation-state';
+import StockResultCard from "./StockResultCard";
 
 const StockLists: Component = () => {
 
@@ -57,6 +58,10 @@ const StockLists: Component = () => {
     }
   }
 
+  async function detailStock(itemName: string) {
+    alert("Function not implemented yet");
+  }
+
   getFolderName();
 
   return (
@@ -85,25 +90,52 @@ const StockLists: Component = () => {
       </div>
 
         <div class="lists-stock">
-          
-          <For each={stocks()}>
-            {(stock: stockDetails) => {
 
-              return (
-                <StockOpnameCard
-                  note_stock={stock.note_stock}
-                  delete_stock={delete_stock}
-                  folder_id={stock.folder_id}
-                  itemId={stock.itemId}
-                  item_name={stock.item_name}
-                  option={option_stock}
-                  stockId={stock.stockId}
-                  total_stock={stock.total_stock}
-                  stockNumber={stock.stockNumber}
-                />
-              )
-            }}
-          </For>
+          {/* Stock opname lists */}
+          <Show
+            when={currentTab() === "stocks"}
+          >
+            <For each={stocks()}>
+              {(stock: stockDetails) => {
+
+                return (
+                  <StockOpnameCard
+                    note_stock={stock.note_stock}
+                    delete_stock={delete_stock}
+                    folder_id={stock.folder_id}
+                    itemId={stock.itemId}
+                    item_name={stock.item_name}
+                    option={option_stock}
+                    stockId={stock.stockId}
+                    total_stock={stock.total_stock}
+                    stockNumber={stock.stockNumber}
+                  />
+                )
+              }}
+            </For>
+          </Show>
+
+
+          {/* Stock opname result */}
+
+
+          <Show
+            when={currentTab() === "result"}
+          >
+            <For each={getResultStock()}>
+              {(stock: ResultStock) => {
+
+                return (
+                  <StockResultCard 
+                    detail={detailStock}
+                    itemId={stock.itemId}
+                    item_name={stock.item_name}
+                    total_stock={stock.total_stock}
+                  />
+                )
+              }}
+            </For>
+          </Show>
         </div>
         <Navigation />
     </>

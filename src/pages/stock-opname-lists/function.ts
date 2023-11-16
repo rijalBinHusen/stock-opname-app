@@ -20,6 +20,12 @@ interface StockForm extends Stock {
     isCalcMode: boolean
     new_item_name?: string
 }
+
+export interface ResultStock {
+    item_name: string
+    total_stock: number
+    itemId: string
+}
   
 const state = <stockDetails[]>[];
 
@@ -123,6 +129,29 @@ export async function updateStockById(stockId: string, stockNumber: string, note
 
     setStocks(newstocks);
     saveToLocalStorage();
+}
+
+export function getResultStock(): ResultStock[] {
+    const result = <ResultStock[]>[];
+
+    for(let stock of stocks()) {
+
+        const findIndex = result.findIndex((stockResult) => stockResult.itemId === stock.itemId);
+
+        if(findIndex > -1) {
+            result[findIndex].total_stock += eval(stock.stockNumber);
+        }
+        
+        else {
+            result.push({
+                item_name: stock.item_name,
+                itemId: stock.itemId,
+                total_stock: eval(stock.stockNumber)
+            })
+        }
+    }
+
+    return result;
 }
 
 function saveToLocalStorage() {

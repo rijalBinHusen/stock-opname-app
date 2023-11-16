@@ -1,5 +1,4 @@
 
-import Button from "../../components/Button"
 import type { stockDetails } from "./function";
 
 interface StockProps extends stockDetails {
