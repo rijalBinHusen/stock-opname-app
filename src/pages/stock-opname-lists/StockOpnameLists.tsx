@@ -1,38 +1,28 @@
-import { type Component, For, Show, createSignal } from 'solid-js';
+import { type Component, For, Show, createSignal, createEffect } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import StockOpnameCard from "./StockOpnameCard";
-import { type stockDetails, getStocks, getStockByFolderId, stocks, removeStockById, getStockById, setCurrentStock, getResultStock, ResultStock } from "./function";
+import { type stockDetails, getStocks, stocks, removeStockById, getStockById, setCurrentStock, getResultStock, ResultStock } from "./function";
 import { folderActive, getFolderById } from "../stock-opname-folder/function";
 import { setPage } from '../../components/Navigations/navigation-state';
 import StockResultCard from "./StockResultCard";
 
 const StockLists: Component = () => {
 
-  const [searchFolder, setSearchFolder] = createSignal("");
+  const [searchItem, setSearchItem] = createSignal("");
   const [folderName, setFolderName] = createSignal("");
   const [currentTab, setCurrentTab] = createSignal("stocks");
+  const [stocksToShow, setStockToShow] = createSignal<stockDetails[]>([])
+
+
+  getStocks().then(() => setStockToShow(stocks()))
+
+  createEffect(() => {
+
+    let stocksFiltered = stocks().filter((stock) => stock.item_name.toLowerCase().includes(searchItem().toLowerCase()))
+    setStockToShow(stocksFiltered);
+  })
   
-
-  getStocks()
-  // .then(() => {
-  //   getStockByFolderId(folderActive());
-  // })
-
-  // const editFolderById: JSX.EventHandler<HTMLButtonElement, MouseEvent> = async (event) => {
-
-  //   if(typeof event === "string" && event !== "") {
-
-  //     const folder = await getFolderById(event);
-      
-  //     if(folder?.folderName) {
-
-  //       setFolderName(folder.folderName);
-  //       itemIdEdit = folder.folderId;
-  //       setEditMode(true);
-  //     }
-  //   }
-  // }
-
+  
   function delete_stock (stockId: string) {
     const confirm = window.confirm("Apakah anda yakin akan menghapus stock tersebut?");
     if(confirm) removeStockById(stockId);
@@ -88,7 +78,12 @@ const StockLists: Component = () => {
         when={currentTab() === "stocks"}
       >
         <div class="form-input">
-          <input type="text"  placeholder="Cari item" />
+          <input 
+            type="text" 
+            placeholder="Cari item"
+            value={searchItem()}
+            onInput={(e) => setSearchItem(e.currentTarget.value)}
+           />
           <button class="button">Cari</button>
         </div>
       </Show>
@@ -99,22 +94,21 @@ const StockLists: Component = () => {
           <Show
             when={currentTab() === "stocks"}
           >
-            <For each={stocks()}>
+            <For each={stocksToShow()}>
               {(stock: stockDetails) => {
-
                 return (
                   <StockOpnameCard
-                    note_stock={stock.note_stock}
-                    delete_stock={delete_stock}
-                    folder_id={stock.folder_id}
-                    itemId={stock.itemId}
-                    item_name={stock.item_name}
-                    option={option_stock}
-                    stockId={stock.stockId}
-                    total_stock={stock.total_stock}
-                    stockNumber={stock.stockNumber}
+                  note_stock={stock.note_stock}
+                  delete_stock={delete_stock}
+                  folder_id={stock.folder_id}
+                  itemId={stock.itemId}
+                  item_name={stock.item_name}
+                  option={option_stock}
+                  stockId={stock.stockId}
+                  total_stock={stock.total_stock}
+                  stockNumber={stock.stockNumber}
                   />
-                )
+                  )
               }}
             </For>
           </Show>
