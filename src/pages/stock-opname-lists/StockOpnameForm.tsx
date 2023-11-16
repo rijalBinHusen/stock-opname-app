@@ -10,7 +10,7 @@ function StockForm () {
   const isEditMode = currentStock().stockId !== "";
 
   async function submitStock () {
-    let { date_stock, stockNumber, itemId, is_new_item, new_item_name } = currentStock();
+    let { note_stock, stockNumber, itemId, is_new_item, new_item_name } = currentStock();
 
     if(is_new_item && typeof new_item_name ==='string' && new_item_name !== "") {
       
@@ -28,16 +28,16 @@ function StockForm () {
       return;
     }
 
-    if(isEditMode) updateStockById(currentStock().stockId, currentStock().stockNumber, currentStock().date_stock);
-    else await createStock(itemId, stockNumber, date_stock);
+    if(isEditMode) updateStockById(currentStock().stockId, currentStock().stockNumber, currentStock().note_stock);
+    else await createStock(itemId, stockNumber, note_stock);
 
     emptyForm();
     // go to page stock list;
     setPage("stock-list");
   }
 
-  async function createStock (itemId: string, stockNumber: string, date_stock: string) {
-    addStock(itemId, stockNumber, folderActive(), date_stock);
+  async function createStock (itemId: string, stockNumber: string, note_stock: string) {
+    addStock(itemId, stockNumber, folderActive(), note_stock);
   }
 
   function setStockNumber(e: string) {
@@ -52,7 +52,7 @@ function StockForm () {
 
   function emptyForm () {
     setCurrentStock({
-      date_stock: '',
+      note_stock: '',
       stockNumber: '',
       folder_id: '',
       itemId: '',
@@ -126,6 +126,8 @@ function StockForm () {
           id="stock-note" 
           type="text" 
           placeholder="Catatan stock"
+          value={currentStock().note_stock}
+          onInput={(e) => setCurrentStock({ ...currentStock(), note_stock: e.currentTarget.value })}
         />
         
         <input type="button" class="secondary-color" value={isEditMode ? 'Update' : 'Tambahkan'} onClick={submitStock}/>

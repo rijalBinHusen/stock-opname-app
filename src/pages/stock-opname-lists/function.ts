@@ -7,7 +7,7 @@ export interface Stock {
     itemId: string
     stockNumber: string
     folder_id: string
-    date_stock: string
+    note_stock: string
 }
 
 export interface stockDetails extends Stock {
@@ -26,7 +26,7 @@ const state = <stockDetails[]>[];
 
 export const [stocks, setStocks] = createSignal(state);
 export const [currentStock, setCurrentStock] = createSignal<StockForm>({
-    date_stock: '',
+    note_stock: '',
     stockNumber: '',
     folder_id: '',
     itemId: '',
@@ -35,7 +35,7 @@ export const [currentStock, setCurrentStock] = createSignal<StockForm>({
     isCalcMode: false
   });
 
-export async function addStock(itemId: string, stockNumber: string, folder_id: string, date_stock: string): Promise<string> {
+export async function addStock(itemId: string, stockNumber: string, folder_id: string, note_stock: string): Promise<string> {
 
     const randomString = (Math.random() + 1).toString(36).substring(8);
     const stockId = randomString + stocks().length;
@@ -55,7 +55,7 @@ export async function addStock(itemId: string, stockNumber: string, folder_id: s
         total_stock,
         item_name,
         folder_id,
-        date_stock
+        note_stock
     }, ...stocks]);
 
     updateFolderCounterById(folder_id, +1)
@@ -115,10 +115,10 @@ export async function getStockById(stockId: string): Promise<Stock|void> {
     }
 }
 
-export async function updateStockById(stockId: string, stockNumber: string, date_stock: string) {
+export async function updateStockById(stockId: string, stockNumber: string, note_stock: string) {
     const newstocks = stocks().map((rec) => {
         if(rec.stockId === stockId) {
-            return { ...rec, stockNumber, date_stock }
+            return { ...rec, stockNumber, note_stock }
         }
         return rec
     })
@@ -130,7 +130,7 @@ export async function updateStockById(stockId: string, stockNumber: string, date
 function saveToLocalStorage() {
     const getStocks = getStockByFolderId(folderActive())
     const removeUnusedKeyValue:Stock[] = getStocks.map((stock) => ({
-        date_stock: stock.date_stock, 
+        note_stock: stock.note_stock, 
         folder_id: stock.folder_id, 
         itemId: stock.itemId, 
         stockId: stock.stockId,

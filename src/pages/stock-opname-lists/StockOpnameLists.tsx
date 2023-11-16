@@ -79,7 +79,7 @@ const StockLists: Component = () => {
 
               return (
                 <StockOpnameCard
-                  date_stock={stock.date_stock}
+                  note_stock={stock.note_stock}
                   delete_stock={delete_stock}
                   folder_id={stock.folder_id}
                   itemId={stock.itemId}

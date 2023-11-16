@@ -18,7 +18,7 @@ export default function StockCard (props: StockProps) {
             {props.total_stock}
           </span>
         </span>
-        <span>{props.date_stock}</span>
+        <span style="background-color:gainsboro">{props.note_stock}</span>
       </div>
       <div class="stock-opname-option">
         <button class="secondary-color" onClick={ () => props.option(props.stockId)}>Edit</button>
