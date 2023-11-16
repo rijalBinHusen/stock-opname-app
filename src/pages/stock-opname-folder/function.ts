@@ -11,7 +11,7 @@ const localStorageName = "stock-folder";
 export const [folderActive, setFolderActive] = createSignal("");
 export const [folders, setFolders] = createSignal(state);
 
-export async function addFolder(folderName: string): Promise<void> {
+export async function addFolder(folderName: string): Promise<string> {
 
     const randomString = (Math.random() + 1).toString(36).substring(8);
     const folderId = randomString + folders().length + 1 + '';
@@ -21,6 +21,7 @@ export async function addFolder(folderName: string): Promise<void> {
     setFolders((folders) => [{ folderId, folderName, folderCounter: 0 }, ...folders]);
 
     saveToLocalStorage();
+    return folderId
 }
 
 export async function getFolders(): Promise<void> {
