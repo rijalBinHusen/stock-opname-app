@@ -1,7 +1,7 @@
 import { type Component, For, JSX, createSignal } from 'solid-js';
 import Navigation from '../../components/Navigations/Navigation';
 import StockOpnameCard from "./StockOpnameCard";
-import { type stockDetails, getstocks, getStockByFolderId, stocks, removeStockById, getStockById, setCurrentStock } from "./function";
+import { type stockDetails, getStocks, getStockByFolderId, stocks, removeStockById, getStockById, setCurrentStock } from "./function";
 import { folderActive, getFolderById } from "../stock-opname-folder/function";
 import { setPage } from '../../components/Navigations/navigation-state';
 
@@ -11,9 +11,10 @@ const StockLists: Component = () => {
   const [folderName, setFolderName] = createSignal("");
   
 
-  getstocks().then(() => {
-    getStockByFolderId(folderActive());
-  })
+  getStocks()
+  // .then(() => {
+  //   getStockByFolderId(folderActive());
+  // })
 
   // const editFolderById: JSX.EventHandler<HTMLButtonElement, MouseEvent> = async (event) => {
 

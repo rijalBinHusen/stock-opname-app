@@ -38,6 +38,9 @@ export async function getItems(): Promise<void> {
 }
 
 export async function getItemById(itemId: string): Promise<Item|void> {
+
+    if(items().length === 0) await getItems();
+    
     const findIndex = items().findIndex((rec) => rec.itemId === itemId);
 
     if(findIndex > -1) {

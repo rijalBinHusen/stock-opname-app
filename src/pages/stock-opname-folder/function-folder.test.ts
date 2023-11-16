@@ -32,4 +32,29 @@ describe('Stock folder services', () => {
             expect(getUpdatedFolder?.folderName).equal(folderNameToUpdate);
         }
     })
+
+    it("Should be update folder counter", async () => {
+        for(let folderId of folderIds) {
+            const numberToUpdate = faker.number.int({min: 10})
+
+            await updateFolderCounterById(folderId, numberToUpdate);
+            const getUpdatedFolder = await getFolderById(folderId);
+            expect(getUpdatedFolder?.folderCounter).equal(numberToUpdate)
+
+            const minusNumerToUpdate = faker.number.int({ min: -4, max: -1 })
+            await updateFolderCounterById(folderId, minusNumerToUpdate);
+            const getFolderMinusCounter = await getFolderById(folderId);
+
+            expect(getFolderMinusCounter?.folderCounter).equal(numberToUpdate + minusNumerToUpdate)
+        }
+
+        it("Should be change the folder active", () => {
+            for (let folderId of folderIds) {
+                setFolderActive(folderId);
+
+                expect(folderActive()).equal(folderId);
+                console.log(folderId)
+            }
+        })
+    })
 })

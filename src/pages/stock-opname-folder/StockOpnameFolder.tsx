@@ -55,8 +55,8 @@ const ItemLists: Component = () => {
   }
 
   function chooseCurrentFolder(idFolder: string) {
-    setPage("stock-list");
     setFolderActive(idFolder);
+    setPage("stock-list");
   }
 
   return (

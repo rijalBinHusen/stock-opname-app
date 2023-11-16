@@ -35,11 +35,14 @@ export const [currentStock, setCurrentStock] = createSignal<StockForm>({
     isCalcMode: false
   });
 
-export async function addStock(itemId: string, stockNumber: string, folder_id: string, date_stock: string): Promise<void> {
+export async function addStock(itemId: string, stockNumber: string, folder_id: string, date_stock: string): Promise<string> {
 
-    const stockId = new Date().getTime() + '';
+    const randomString = (Math.random() + 1).toString(36).substring(8);
+    const stockId = randomString + stocks().length;
+
+    let isNeedToGetStock = stocks().length === 0 || folderActive() !== folder_id;
     
-    if(stocks.length === 0) { await getstocks(); };
+    if(isNeedToGetStock) await getStocks();
 
     const total_stock = eval(stockNumber);
     const getItem = await getItemById(itemId)
@@ -56,14 +59,14 @@ export async function addStock(itemId: string, stockNumber: string, folder_id: s
     }, ...stocks]);
 
     updateFolderCounterById(folder_id, +1)
-
     saveToLocalStorage();
+
+    return stockId
 }
 
-export async function getstocks(): Promise<void> {
+export async function getStocks(): Promise<void> {
+    if(stocks().length > 0) setStocks([]);
     
-    if(stocks.length > 0) return;
-
     const getstocks = localStorage.getItem(folderActive());
 
     if(typeof getstocks === 'string') {
@@ -81,6 +84,7 @@ export async function getstocks(): Promise<void> {
 
         setStocks(stockDetails);
     }
+
 }
 
 export function getStockByFolderId(folderId: string): stockDetails[] {
@@ -136,7 +140,8 @@ export async function getStockById(stockId: string): Promise<Stock|void> {
 // }
 
 function saveToLocalStorage() {
-    const removeUnusedKeyValue:Stock[] = stocks().map((stock) => ({
+    const getStocks = getStockByFolderId(folderActive())
+    const removeUnusedKeyValue:Stock[] = getStocks.map((stock) => ({
         date_stock: stock.date_stock, 
         folder_id: stock.folder_id, 
         itemId: stock.itemId, 
