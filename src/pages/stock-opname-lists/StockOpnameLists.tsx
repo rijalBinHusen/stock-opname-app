@@ -9,6 +9,7 @@ const StockLists: Component = () => {
 
   const [searchFolder, setSearchFolder] = createSignal("");
   const [folderName, setFolderName] = createSignal("");
+  const [currentTab, setCurrentTab] = createSignal("stocks");
   
 
   getStocks()
@@ -63,8 +64,19 @@ const StockLists: Component = () => {
       <h1>{ folderName() }</h1>
         
       <div class="tab">
-        <button class="tablinks active">Stock opname</button>
-        <button class="tablinks">Hasil stock</button>
+        <button 
+          class={currentTab() === 'stocks' ? 'tablinks active' : 'tablinks '}
+          onClick={() => setCurrentTab("stocks")}
+        >
+          Stock opname
+        </button>
+
+        <button 
+          class={currentTab() === 'result' ? 'tablinks active' : 'tablinks '}
+          onClick={() => setCurrentTab("result")}
+        >
+          Hasil stock
+        </button>
       </div>
 
       <div class="form-input">
