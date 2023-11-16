@@ -87,7 +87,17 @@ const StockLists: Component = () => {
             value={searchItem()}
             onInput={(e) => setSearchItem(e.currentTarget.value)}
            />
-          <button class="button">Cari</button>
+
+          <Show
+            when={searchItem() !== ""}
+          >
+            <button 
+              class="button"
+              onClick={(e) => setSearchItem("")}
+            >
+              Cancel
+            </button>
+          </Show>
         </div>
       </Show>
 
