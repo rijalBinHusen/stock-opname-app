@@ -18,7 +18,7 @@ export default function ItemCard (props: Item) {
 
             <span class="badge">{ props.folderCounter }</span>
             <Button color="secondary" text="Edit" onClick={ () => props.editFolder(props.folderId)} />
-            <Button color="secondary" text="❏ Gandakan" onClick={ () => props.duplicateFolder(props.folderId)} />
+            {/* <Button color="secondary" text="❏ Gandakan" onClick={ () => props.duplicateFolder(props.folderId)} /> */}
           </div>
         </div>
   );
