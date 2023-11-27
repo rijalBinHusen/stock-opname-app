@@ -36,9 +36,9 @@ function StockCalc (props:calcProps) {
         <br/>
         <br/>
         
-        <input type="button" value="1" onClick={() => setStockSum(stockSum() + '1')}/>
-        <input type="button" value="2" onClick={() => setStockSum(stockSum() + '2')}/>
-        <input type="button" value="3" onClick={() => setStockSum(stockSum() + '3')}/>
+        <input type="button" value="7" onClick={() => setStockSum(stockSum() + '7')}/>
+        <input type="button" value="8" onClick={() => setStockSum(stockSum() + '8')}/>
+        <input type="button" value="9" onClick={() => setStockSum(stockSum() + '9')}/>
         <input type="button" value="+" onClick={() => setStockSum(stockSum() + '+')}/>
         <br/>
         <br/>
@@ -50,9 +50,9 @@ function StockCalc (props:calcProps) {
         <br/>
         <br/>
 
-        <input type="button" value="7" onClick={() => setStockSum(stockSum() + '7')}/>
-        <input type="button" value="8" onClick={() => setStockSum(stockSum() + '8')}/>
-        <input type="button" value="9" onClick={() => setStockSum(stockSum() + '9')}/>
+        <input type="button" value="1" onClick={() => setStockSum(stockSum() + '1')}/>
+        <input type="button" value="2" onClick={() => setStockSum(stockSum() + '2')}/>
+        <input type="button" value="3" onClick={() => setStockSum(stockSum() + '3')}/>
         <input type="button" value="-" onClick={() => setStockSum(stockSum() + '-')}/>
         <br/>
         <br/>
