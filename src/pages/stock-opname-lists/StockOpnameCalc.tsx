@@ -74,8 +74,8 @@ function StockCalc(props: calcProps) {
         <br />
 
         <input type="button" value="Exit" onClick={() => props.cancel()} />
-        <input type="button" value="" />
-        <input type="button" value="" />
+        <input type="button" value="__" />
+        <input type="button" value="__" />
         <input type="button" value="OK" onClick={() => props.setStockInfo(stockSum())} />
       </form>
     </div>

@@ -26,7 +26,7 @@ export interface ResultStock {
     total_stock: number
     itemId: string
 }
-  
+
 const state = <stockDetails[]>[];
 
 
@@ -38,8 +38,9 @@ export const [currentStock, setCurrentStock] = createSignal<StockForm>({
     itemId: '',
     stockId: '',
     is_new_item: false,
-    isCalcMode: false
-  });
+    isCalcMode: false,
+    new_item_name: ""
+});
 
 export async function addStock(itemId: string, stockNumber: string, folder_id: string, note_stock: string): Promise<string> {
 
@@ -47,15 +48,15 @@ export async function addStock(itemId: string, stockNumber: string, folder_id: s
     const stockId = randomString + stocks().length;
 
     let isNeedToGetStock = stocks().length === 0 || folderActive() !== folder_id;
-    
-    if(isNeedToGetStock) await getStocks();
+
+    if (isNeedToGetStock) await getStocks();
 
     const total_stock = eval(stockNumber);
     const getItem = await getItemById(itemId)
     const item_name = getItem ? getItem?.itemName : 'Item tidak ditemukan';
-    
+
     setStocks((stocks) => [{
-        stockId, 
+        stockId,
         itemId,
         stockNumber,
         total_stock,
@@ -71,21 +72,21 @@ export async function addStock(itemId: string, stockNumber: string, folder_id: s
 }
 
 export async function getStocks(): Promise<void> {
-    if(stocks().length > 0) setStocks([]);
-    
+    if (stocks().length > 0) setStocks([]);
+
     const getstocks = localStorage.getItem(folderActive());
 
-    if(typeof getstocks === 'string') {
+    if (typeof getstocks === 'string') {
 
         const stocks = JSON.parse(getstocks) as Stock[];
         const stockDetails = <stockDetails[]>[];
 
-        for(let stock of stocks) {
-            
+        for (let stock of stocks) {
+
             const total_stock = eval(stock.stockNumber);
             const getItem = await getItemById(stock.itemId);
             const item_name = getItem ? getItem?.itemName : 'Item tidak ditemukan';
-            stockDetails.push({...stock, total_stock, item_name});
+            stockDetails.push({ ...stock, total_stock, item_name });
         }
 
         setStocks(stockDetails);
@@ -98,22 +99,22 @@ export function getStockByFolderId(folderId: string): stockDetails[] {
 }
 
 export async function removeStockById(stockId: string): Promise<void> {
-    
+
     const findIndexStock = stocks().findIndex((rec) => rec.stockId === stockId);
 
-    if(findIndexStock > -1) {
+    if (findIndexStock > -1) {
 
         updateFolderCounterById(stocks()[findIndexStock].folder_id, -1)
         setStocks((stocks) => stocks.filter((stock) => stock.stockId !== stockId))
-    
+
         saveToLocalStorage();
     }
 }
 
-export async function getStockById(stockId: string): Promise<Stock|void> {
+export async function getStockById(stockId: string): Promise<Stock | void> {
     const findIndex = stocks().findIndex((rec) => rec.stockId === stockId);
 
-    if(findIndex > -1) {
+    if (findIndex > -1) {
 
         return stocks()[findIndex]
     }
@@ -121,7 +122,7 @@ export async function getStockById(stockId: string): Promise<Stock|void> {
 
 export async function updateStockById(stockId: string, stockNumber: string, note_stock: string) {
     const newstocks = stocks().map((rec) => {
-        if(rec.stockId === stockId) {
+        if (rec.stockId === stockId) {
             return { ...rec, stockNumber, note_stock }
         }
         return rec
@@ -134,14 +135,14 @@ export async function updateStockById(stockId: string, stockNumber: string, note
 export function getResultStock(): ResultStock[] {
     const result = <ResultStock[]>[];
 
-    for(let stock of stocks()) {
+    for (let stock of stocks()) {
 
         const findIndex = result.findIndex((stockResult) => stockResult.itemId === stock.itemId);
 
-        if(findIndex > -1) {
+        if (findIndex > -1) {
             result[findIndex].total_stock += eval(stock.stockNumber);
         }
-        
+
         else {
             result.push({
                 item_name: stock.item_name,
@@ -156,10 +157,10 @@ export function getResultStock(): ResultStock[] {
 
 function saveToLocalStorage() {
     const getStocks = getStockByFolderId(folderActive())
-    const removeUnusedKeyValue:Stock[] = getStocks.map((stock) => ({
-        note_stock: stock.note_stock, 
-        folder_id: stock.folder_id, 
-        itemId: stock.itemId, 
+    const removeUnusedKeyValue: Stock[] = getStocks.map((stock) => ({
+        note_stock: stock.note_stock,
+        folder_id: stock.folder_id,
+        itemId: stock.itemId,
         stockId: stock.stockId,
         stockNumber: stock.stockNumber
     }))
