@@ -67,7 +67,8 @@ function StockForm() {
       itemId: '',
       stockId: '',
       is_new_item: false,
-      isCalcMode: false
+      isCalcMode: false,
+      new_item_name: ""
     })
   }
 
@@ -90,7 +91,12 @@ function StockForm() {
             when={!isEditMode}
           >
             <div>
-              <input onChange={() => setCurrentStock({ ...currentStock(), is_new_item: !currentStock().is_new_item })} type="checkbox" id="is-new-item" />
+              <input
+                onChange={() => setCurrentStock({ ...currentStock(), is_new_item: !currentStock().is_new_item })}
+                type="checkbox"
+                id="is-new-item"
+                checked={currentStock().is_new_item}
+              />
               <label for="is-new-item">Produk baru</label>
             </div>
           </Show>
@@ -117,6 +123,7 @@ function StockForm() {
               type="text"
               placeholder="Masukkan nama item baru"
               onInput={(e) => setCurrentStock({ ...currentStock(), new_item_name: e.currentTarget.value })}
+              value={currentStock().new_item_name}
             />
           </Show>
 

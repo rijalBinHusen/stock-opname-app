@@ -1,11 +1,11 @@
 <!-- 
-- [ ] Nama item (baru)  tidak boleh hilang setelah kembali dari kaklkulator
  -->
 
 
 ## 30 Desember 2023
 - [x] Kalkulator ada tombol C (clear all)
 - [x] Kalkulator ada tombol oke dan exit
+- [x] Nama item (baru)  tidak boleh hilang setelah kembali dari kaklkulator
 
 ## 3 November 2023
 - [x] Form add stock, sediakan checkbox untuk switching antara add item as new item or select from existing item
